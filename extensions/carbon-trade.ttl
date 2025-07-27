@@ -1,0 +1,29 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix eco: <https://w3id.org/peco#> .
+@prefix cto: <https://example.org/cto#> .
+
+<https://example.org/cto>
+    a owl:Ontology ;
+    rdfs:label "Carbon Trade Ontology (PECO Extension)" ;
+    rdfs:comment "Extension of PECO to represent carbon credits and trading." ;
+    dct:creator "Alisa Inari" ;
+    dct:created "2025-07-27"^^xsd:date ;
+    owl:imports <https://w3id.org/peco> .
+
+cto:CarbonCredit a owl:Class ;
+    rdfs:label "Carbon Credit" ;
+    rdfs:subClassOf eco:EmissionsResult ;
+    rdfs:comment "A unit representing a verified reduction or removal of carbon dioxide equivalent (CO₂e)." .
+
+cto:issuedBy a owl:ObjectProperty ;
+    rdfs:domain cco:CarbonCredit ;
+    rdfs:range <http://xmlns.com/foaf/0.1/Organization> ;
+    rdfs:comment "The organization that issued the carbon credit." .
+
+cto:creditAmount a owl:DatatypeProperty ;
+    rdfs:domain cco:CarbonCredit ;
+    rdfs:range xsd:decimal ;
+    rdfs:comment "The amount of CO₂e (in tonnes) represented by the credit." .
