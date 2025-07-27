@@ -2,39 +2,47 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dct: <http://purl.org/dc/terms/> .
-@prefix eco: <https://w3id.org/peco#> .
+@prefix peco: <https://w3id.org/peco#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix cto: <https://example.org/cto#> .
 
 <https://example.org/cto>
     a owl:Ontology ;
-    rdfs:label "Carbon Trade Ontology (PECO Extension)" ;
+    rdfs:label "Carbon Trade Ontology (extension of PECO)" ;
     rdfs:comment "Extension of PECO to represent carbon credits and trading." ;
-    dct:creator "Alisa Inari" ;
+    dct:creator "AlisaInari" ;
     dct:created "2025-07-25"^^xsd:date ;
     owl:imports <https://w3id.org/peco> .
 
+#Add how credit calculated or where it comes from (peco:EmissionScore), also what activity the sequestration comes from?
+#classes
+
 cto:CarbonCredit a owl:Class ;
     rdfs:label "Carbon Credit" ;
-    rdfs:subClassOf eco:EmissionsResult ;
+    rdfs:subClassOf peco:EmissionsResult ;
     rdfs:comment "A unit representing a verified reduction or removal of carbon dioxide equivalent (CO₂e)." .
 
+#object properties
+
 cto:issuedBy a owl:ObjectProperty ;
-    rdfs:domain cco:CarbonCredit ;
-    rdfs:range <http://xmlns.com/foaf/0.1/Organization> ;
+    rdfs:domain cto:CarbonCredit ;
+    rdfs:range foaf:Organization ;
     rdfs:label "issued by" ;
-    rdfs:comment "The organization that verified and issued the carbon credit." .
+    rdfs:comment "Relation linking a carbon credit to the organization that issued it." .
 
-cto:creditAmount a owl:DatatypeProperty ;
-    rdfs:domain cco:CarbonCredit ;
-    rdfs:range xsd:decimal ;
-    rdfs:label "credit amount" ;
-    rdfs:comment "The amount of CO₂e (in tonnes) represented by the credit." .
-
-cco:registeredIn a owl:ObjectProperty ;
-    rdfs:domain cco:CarbonCredit ;
+cto:registeredIn a owl:ObjectProperty ;
+    rdfs:domain cto:CarbonCredit ;
     rdfs:range rdfs:Resource ;
     rdfs:label "registered in" ;
     rdfs:comment "A registry or platform in which the carbon credit is listed." .
+
+#datatype (or should just use qudt:quantity with qudt:unit?)
+
+cto:creditAmount a owl:DatatypeProperty ;
+    rdfs:domain cto:CarbonCredit ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "credit amount" ;
+    rdfs:comment "The amount of CO₂e (in tonnes) represented by the credit." .
 
 
 
